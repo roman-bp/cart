@@ -9,30 +9,41 @@
         .buttonLabel {
             font-size: 0;
         }
-        H2{
-            color: rgb(105, 105, 45);
-            font-size: 20PX;
-        }
+
         /* Показывать только кнопку при наведении */
         .buttonLabel button {
             font-size: 16px; /* Установите желаемый размер шрифта */
-            background-color: green;
-            color: aqua;
-            height: 30PX;
-            border-radius: 8PX;
+            width: 150px;
+        }
+
+        /* Стили для контейнера контакта */
+        .contactContainer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: nowrap
+        }
+
+        /* Стили для столбца с изображением */
+        .avatarColumn {
+            flex: 1;
+            text-align: center;
+        }
+
+        /* Стили для столбца с телефонами */
+        .phonesColumn {
+            flex: 1;
+           ;
         }
     </style>
 </head>
 <body>
-    <h1><Datag>Водіі</Datag></h1>
-
-    <a href="index.html">Експедитори</a>
-    <a href="gruz.html">Вантажники</a>
+    <h1>Phonebook</h1>
     <div id="contacts"></div>
 
     <script>
         // Загрузка данных из внешнего файла
-        fetch('phonebookDriver.json')
+        fetch('phonebook.json')
             .then(response => response.json())
             .then(data => {
                 var contactsDiv = document.getElementById('contacts');
@@ -40,10 +51,17 @@
                 // Вывод контактов на страницу
                 data.contacts.forEach(contact => {
                     var contactDiv = document.createElement('div');
+                    contactDiv.classList.add('contactContainer');
                     contactDiv.innerHTML = `
-                        <h2>${contact.name}</h2>
-                        <span class="buttonLabel"><button onclick="callNumber('${contact.work}')">${contact.work}</button></span>
-                        <span class="buttonLabel"><button onclick="callNumber('${contact.home}')">${contact.home}</button></span>
+                    <h2>${contact.name}</h2>
+                        <div class="avatarColumn">
+                            
+                            <img class="avatar" src="${contact.photo}" alt="${contact.name}'s photo" style="width: 75px; height: 75px; display: inline-block;">
+                        </div>
+                        <div class="phonesColumn">
+                            <span class="buttonLabel"><button onclick="callNumber('${contact.work}')">Рабочий: ${contact.work}</button></span>
+                            <span class="buttonLabel"><button onclick="callNumber('${contact.home}')">Домашний: ${contact.home}</button></span>
+                        </div>
                         <hr>
                     `;
                     contactsDiv.appendChild(contactDiv);
@@ -58,3 +76,4 @@
     </script>
 </body>
 </html>
+
